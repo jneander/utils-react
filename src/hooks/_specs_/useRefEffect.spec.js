@@ -4,7 +4,7 @@ import sinon from 'sinon'
 
 import {useRefEffect} from '..'
 
-describe.only('.useRefEffect()', () => {
+describe('.useRefEffect()', () => {
   let component
   let callbackFn
   let callbackTeardownFn
