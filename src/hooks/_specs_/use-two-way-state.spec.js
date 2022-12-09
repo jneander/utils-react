@@ -1,6 +1,6 @@
 import {act, renderHook} from '@jneander/spec-utils-react'
 
-import {useTwoWayState} from '..'
+import useTwoWayState from '../use-two-way-state'
 
 describe('Hooks > .useTwoWayState()', () => {
   let component

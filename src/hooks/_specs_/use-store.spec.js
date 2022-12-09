@@ -5,7 +5,7 @@ import {createContainer} from '@jneander/spec-utils-dom'
 import {act, render} from '@jneander/spec-utils-react'
 import {Store} from '@jneander/utils-state'
 
-import {useStore} from '../..'
+import useStore from '../use-store'
 
 describe('Hooks > .useStore()', () => {
   let $container

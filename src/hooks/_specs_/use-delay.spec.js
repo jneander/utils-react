@@ -1,7 +1,7 @@
 import sinon from 'sinon'
 
 import {act, renderHook} from '@jneander/spec-utils-react'
-import useDelay from '../useDelay'
+import useDelay from '../use-delay'
 
 describe('Hooks > .useDelay()', () => {
   let component

@@ -1,1 +1,1 @@
-export {default as combineRefs} from './combineRefs'
+export {default as combineRefs} from './combine-refs'
