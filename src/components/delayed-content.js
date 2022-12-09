@@ -7,5 +7,5 @@ export default function DelayedContent({children, duration, shouldDelay}) {
 
 DelayedContent.defaultProps = {
   duration: DEFAULT_DURATION,
-  shouldDelay: true
+  shouldDelay: true,
 }
