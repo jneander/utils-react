@@ -27,7 +27,7 @@ module.exports = {
         node: true,
       },
 
-      files: ['./babel.*.js', './.eslintrc.js'],
+      files: ['./.eslintrc.js'],
     },
 
     {
@@ -51,7 +51,7 @@ module.exports = {
     },
   ],
 
-  parser: '@babel/eslint-parser',
+  parser: '@typescript-eslint/parser',
 
   parserOptions: {
     ecmaFeatures: {
