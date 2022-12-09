@@ -2,7 +2,7 @@ import sinon from 'sinon'
 
 import {act, renderHook} from '@jneander/spec-utils-react'
 
-import useDebouncedEffect, {DEFAULT_DURATION} from '../useDebouncedEffect'
+import useDebouncedEffect, {DEFAULT_DURATION} from '../use-debounced-effect'
 
 describe('Hooks > .useDebouncedEffect()', () => {
   let component

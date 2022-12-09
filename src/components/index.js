@@ -1,2 +1,2 @@
-export {default as DelayedContent} from './DelayedContent'
-export {default as When} from './When'
+export {default as DelayedContent} from './delayed-content'
+export {default as When} from './when'

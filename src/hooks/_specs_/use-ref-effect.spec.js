@@ -2,7 +2,7 @@ import {createRef} from 'react'
 import {renderHook} from '@jneander/spec-utils-react'
 import sinon from 'sinon'
 
-import {useRefEffect} from '..'
+import useRefEffect from '../use-ref-effect'
 
 describe('Hooks > .useRefEffect()', () => {
   let component

@@ -1,4 +1,4 @@
-import useDelay, {DEFAULT_DURATION} from '../hooks/useDelay'
+import useDelay, {DEFAULT_DURATION} from '../hooks/use-delay'
 
 export default function DelayedContent({children, duration, shouldDelay}) {
   const isDelayed = useDelay(shouldDelay, duration)
