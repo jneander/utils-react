@@ -2,7 +2,7 @@ import {act, renderHook} from '@jneander/spec-utils-react'
 
 import {useTwoWayState} from '..'
 
-describe('.useTwoWayState()', () => {
+describe('Hooks > .useTwoWayState()', () => {
   let component
   let externalValue
   let result
