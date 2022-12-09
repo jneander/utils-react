@@ -33,7 +33,6 @@
     "url": "https://github.com/jneander/utils-react/issues"
   },
   "dependencies": {
-    "@jneander/utils": "^1.0.2",
     "@popperjs/core": "^2.0.4"
   },
   "devDependencies": {
@@ -48,7 +47,6 @@
     "@jneander/prettier-config": "^1.0.0",
     "@jneander/spec-utils-dom": "^1.1.2",
     "@jneander/spec-utils-react": "^1.0.1",
-    "@jneander/utils-state": "^1.0.1",
     "babel-loader": "^8.2.2",
     "chai": "^4.3.0",
     "core-js": "^3.8.3",
@@ -71,7 +69,6 @@
     "mocha": "^8.2.1",
     "prettier": "^2.8.1",
     "process": "^0.11.10",
-    "prop-types": "^15.7.2",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-test-renderer": "^17.0.0",
