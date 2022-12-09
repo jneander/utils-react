@@ -14,7 +14,7 @@ function maybe(fn) {
   }
 }
 
-export default function useRefEffect(callbackFn, refs) {
+export function useRefEffect(callbackFn, refs) {
   const currentsMemo = useRef([])
   const teardownMemo = useRef(null)
 

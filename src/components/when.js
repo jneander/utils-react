@@ -1,4 +1,4 @@
-export default function When(props) {
+export function When(props) {
   if (props.case) {
     return props.children
   }
