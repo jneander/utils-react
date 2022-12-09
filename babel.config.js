@@ -9,7 +9,7 @@ module.exports = {
           version: 3,
         },
 
-        modules: false,
+        modules: process.env.CJS ? 'commonjs' : false,
 
         targets: {
           browsers: [
