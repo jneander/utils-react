@@ -19,7 +19,7 @@ describe('Hooks > .useDebouncedEffect()', () => {
     options = {
       callback: sinon.spy(),
       dependencies: ['example'],
-      duration: 100
+      duration: 100,
     }
 
     component = null
@@ -33,7 +33,7 @@ describe('Hooks > .useDebouncedEffect()', () => {
   function render() {
     if (component == null) {
       component = renderHook(() =>
-        useDebouncedEffect(options.callback, options.dependencies, options.duration)
+        useDebouncedEffect(options.callback, options.dependencies, options.duration),
       )
     } else {
       component.rerender()

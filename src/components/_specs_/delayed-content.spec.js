@@ -22,7 +22,7 @@ describe('Components > DelayedContent', () => {
 
     props = {
       duration: 100,
-      shouldDelay: true
+      shouldDelay: true,
     }
 
     await renderComponent()

@@ -18,7 +18,7 @@ describe('Hooks > .useDelay()', () => {
 
     options = {
       duration: 100,
-      shouldDelay: true
+      shouldDelay: true,
     }
 
     component = null
