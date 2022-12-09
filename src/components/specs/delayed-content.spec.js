@@ -4,7 +4,7 @@ import sinon from 'sinon'
 import {createContainer} from '@jneander/spec-utils-dom'
 import {render} from '@jneander/spec-utils-react'
 
-import DelayedContent from '../delayed-content'
+import {DelayedContent} from '../delayed-content'
 
 describe('Components > DelayedContent', () => {
   let $container

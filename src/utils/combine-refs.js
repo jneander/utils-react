@@ -1,4 +1,4 @@
-export default function combineRefs(...refs) {
+export function combineRefs(...refs) {
   return _ref => {
     refs.forEach(ref => {
       if (typeof ref === 'function') {

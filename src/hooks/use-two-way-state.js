@@ -1,6 +1,6 @@
 import {useMemo, useRef, useState} from 'react'
 
-export default function useTwoWayState(externalValue) {
+export function useTwoWayState(externalValue) {
   const canonicalRef = useRef(externalValue)
   const [, setInternalValue] = useState(externalValue)
 

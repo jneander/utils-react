@@ -2,7 +2,7 @@ import {createPopper} from '@popperjs/core'
 
 import {useRefEffect} from '.'
 
-export default function usePosition(options) {
+export function usePosition(options) {
   const {anchorRef, contentRef, popperOptions} = options
 
   return useRefEffect(() => {
