@@ -1,20 +1,31 @@
-import sinon from 'sinon'
+import {act, renderHook} from '@testing-library/react-hooks/dom'
+import sinon, {SinonSpy, SinonStub} from 'sinon'
 
-import {act, renderHook} from '@jneander/spec-utils-react'
 import {useDelay} from './use-delay'
 
+interface UseDelayOptions {
+  duration: Parameters<typeof useDelay>[1]
+  shouldDelay: Parameters<typeof useDelay>[0]
+}
+
 describe('Hooks > .useDelay()', () => {
-  let component
-  let options
-  let result
-  let timeoutFn
+  let component: ReturnType<typeof renderHook<unknown, ReturnType<typeof useDelay>>>
+  let options: UseDelayOptions
+  let result: ReturnType<typeof useDelay>
+  let timeoutFn: Parameters<typeof setTimeout>[0]
+
+  let setTimeoutStub: SinonStub
+  let clearTimeoutSpy: SinonSpy
 
   beforeEach(() => {
-    sinon.stub(window, 'setTimeout').callsFake(fn => {
-      timeoutFn = fn
-      return 123
-    })
-    sinon.spy(window, 'clearTimeout')
+    setTimeoutStub = sinon
+      .stub(window, 'setTimeout')
+      .callsFake((fn: Parameters<typeof setTimeout>[0]) => {
+        timeoutFn = fn
+        return 123 as unknown as ReturnType<typeof setTimeout>
+      })
+
+    clearTimeoutSpy = sinon.spy(window, 'clearTimeout')
 
     options = {
       duration: 100,
@@ -27,13 +38,15 @@ describe('Hooks > .useDelay()', () => {
 
   afterEach(() => {
     component.unmount()
-    window.setTimeout.restore()
-    window.clearTimeout.restore()
+    setTimeoutStub.restore()
+    clearTimeoutSpy.restore()
   })
 
   function render() {
     if (component == null) {
-      component = renderHook(() => useDelay(options.shouldDelay, options.duration))
+      component = renderHook<unknown, ReturnType<typeof useDelay>>(() =>
+        useDelay(options.shouldDelay, options.duration),
+      )
     } else {
       component.rerender()
     }
@@ -69,11 +82,11 @@ describe('Hooks > .useDelay()', () => {
     })
 
     it('clears the timeout', () => {
-      expect(window.clearTimeout.callCount).to.equal(1)
+      expect(clearTimeoutSpy.callCount).to.equal(1)
     })
 
     it('clears the timeout using the id of the timeout', () => {
-      const [timeoutId] = window.clearTimeout.lastCall.args
+      const [timeoutId] = clearTimeoutSpy.lastCall.args
       expect(timeoutId).to.equal(123)
     })
   })

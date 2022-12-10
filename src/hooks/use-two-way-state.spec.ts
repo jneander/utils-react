@@ -1,11 +1,11 @@
-import {act, renderHook} from '@jneander/spec-utils-react'
+import {act, renderHook} from '@testing-library/react-hooks/dom'
 
 import {useTwoWayState} from './use-two-way-state'
 
 describe('Hooks > .useTwoWayState()', () => {
-  let component
-  let externalValue
-  let result
+  let component: ReturnType<typeof renderHook>
+  let externalValue: string
+  let result: [string, (_value: string) => void]
 
   beforeEach(() => {
     component = null

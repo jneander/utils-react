@@ -1,15 +1,15 @@
-import {createRef} from 'react'
-import {renderHook} from '@jneander/spec-utils-react'
-import sinon from 'sinon'
+import {renderHook} from '@testing-library/react-hooks/dom'
+import {MutableRefObject, createRef} from 'react'
+import sinon, {SinonStub} from 'sinon'
 
 import {useRefEffect} from './use-ref-effect'
 
 describe('Hooks > .useRefEffect()', () => {
-  let component
-  let callbackFn
-  let callbackTeardownFn
-  let refs
-  let previousOnError
+  let component: ReturnType<typeof renderHook>
+  let callbackFn: SinonStub
+  let callbackTeardownFn: SinonStub
+  let refs: MutableRefObject<string>[]
+  let previousOnError: typeof window.onerror
 
   beforeEach(() => {
     previousOnError = window.onerror
@@ -27,8 +27,8 @@ describe('Hooks > .useRefEffect()', () => {
     window.onerror = previousOnError
   })
 
-  function createRefWith(value) {
-    const ref = createRef()
+  function createRefWith(value: string): MutableRefObject<string> {
+    const ref = createRef<string>() as MutableRefObject<string>
     ref.current = value
     return ref
   }
@@ -54,7 +54,7 @@ describe('Hooks > .useRefEffect()', () => {
     })
 
     it('ignores a non-function result of the callback function', () => {
-      callbackTeardownFn = 'not-a-function'
+      callbackTeardownFn = 'not-a-function' as unknown as SinonStub
       render()
       expect(component.unmount).not.to.throw()
     })
@@ -83,7 +83,7 @@ describe('Hooks > .useRefEffect()', () => {
       })
 
       it('ignores a non-function result of the callback function', () => {
-        callbackTeardownFn = 'not-a-function'
+        callbackTeardownFn = 'not-a-function' as unknown as SinonStub
         render()
         render()
         expect(component.unmount).not.to.throw()
@@ -108,14 +108,14 @@ describe('Hooks > .useRefEffect()', () => {
     })
 
     it('ignores a non-function result of the callback function', () => {
-      callbackTeardownFn = 'not-a-function'
+      callbackTeardownFn = 'not-a-function' as unknown as SinonStub
       render()
       refs[0].current = 'updatedA'
       expect(render).not.to.throw()
     })
 
     context('when removing the effect after changing call', () => {
-      let nextTeardownFn
+      let nextTeardownFn: SinonStub
 
       beforeEach(() => {
         render()
