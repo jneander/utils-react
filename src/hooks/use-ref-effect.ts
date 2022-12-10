@@ -1,6 +1,10 @@
-import {useLayoutEffect, useRef} from 'react'
+import {MutableRefObject, useLayoutEffect, useRef} from 'react'
 
-function refsChanged(currentsBefore, refsAfter) {
+type RefValueArray = unknown[]
+type RefArray = MutableRefObject<unknown>[]
+type MaybeCallback = (() => unknown) | unknown
+
+function refsChanged(currentsBefore: RefValueArray, refsAfter: RefArray): boolean {
   if (currentsBefore.length !== refsAfter.length) {
     return true
   }
@@ -8,15 +12,19 @@ function refsChanged(currentsBefore, refsAfter) {
   return currentsBefore.some((current, index) => refsAfter[index].current !== current)
 }
 
-function maybe(fn) {
+function maybe(fn: MaybeCallback) {
   if (typeof fn === 'function') {
     fn()
   }
 }
 
-export function useRefEffect(callbackFn, refs) {
-  const currentsMemo = useRef([])
-  const teardownMemo = useRef(null)
+function noop(): void {
+  //
+}
+
+export function useRefEffect(callbackFn: () => MaybeCallback, refs: RefArray): void {
+  const currentsMemo = useRef<RefValueArray>([])
+  const teardownMemo = useRef<MaybeCallback>(null)
 
   useLayoutEffect(() => {
     return () => {
@@ -29,7 +37,7 @@ export function useRefEffect(callbackFn, refs) {
 
   useLayoutEffect(() => {
     if (refsChanged(currentsMemo.current, refs)) {
-      teardownMemo.current = callbackFn() || (() => {})
+      teardownMemo.current = callbackFn() || noop
     }
 
     currentsMemo.current = refs.map(ref => ref.current)

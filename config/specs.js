@@ -3,7 +3,7 @@ const path = require('path')
 
 const {getFlag, getString} = require('@jneander/dev-utils-node').cli
 
-const webpack = require('./webpack.js')
+const webpack = require('./webpack')
 
 const CHROME_FLAGS = [
   '--use-mock-keychain',
@@ -18,10 +18,10 @@ const CHROME_FLAGS = [
   '--allow-file-access-from-files',
 ]
 
-const pattern = getString('pattern', 'src/**/*.spec.js')
+const pattern = getString('pattern', 'src/**/*.spec.*')
 
 const files = [
-  'spec-support/index.js',
+  'spec-support/index.ts',
   {
     pattern,
     watched: false,
@@ -29,8 +29,9 @@ const files = [
 ]
 
 const preprocessors = {
-  'src/**/*.spec.js': ['webpack', 'sourcemap'],
-  'spec-support/index.js': ['webpack', 'sourcemap'],
+  'src/**/*.spec.tsx': ['webpack', 'sourcemap'],
+  'src/**/*.spec.ts': ['webpack', 'sourcemap'],
+  'spec-support/index.ts': ['webpack', 'sourcemap'],
 }
 
 const browsers = []

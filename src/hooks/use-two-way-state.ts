@@ -1,6 +1,6 @@
-import {useMemo, useRef, useState} from 'react'
+import {useCallback, useMemo, useRef, useState} from 'react'
 
-export function useTwoWayState(externalValue) {
+export function useTwoWayState<T = unknown>(externalValue: T): ReturnType<typeof useState<T>> {
   const canonicalRef = useRef(externalValue)
   const [, setInternalValue] = useState(externalValue)
 
@@ -8,10 +8,10 @@ export function useTwoWayState(externalValue) {
     canonicalRef.current = externalValue
   }, [externalValue])
 
-  function setValue(value) {
+  const setValue = useCallback((value: T) => {
     canonicalRef.current = value
     setInternalValue(value)
-  }
+  }, [])
 
   return [canonicalRef.current, setValue]
 }

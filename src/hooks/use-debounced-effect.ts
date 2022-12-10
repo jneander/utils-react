@@ -1,8 +1,12 @@
 import {useEffect} from 'react'
 
-export const DEFAULT_DURATION = 300
+export const USE_DEBOUNCED_EFFECT_DEFAULT_DURATION = 300
 
-export function useDebouncedEffect(callback, dependencies, delay = DEFAULT_DURATION) {
+export function useDebouncedEffect(
+  callback: () => void,
+  dependencies: unknown[],
+  delay = USE_DEBOUNCED_EFFECT_DEFAULT_DURATION,
+): void {
   return useEffect(() => {
     const timeoutId = window.setTimeout(callback, delay)
 

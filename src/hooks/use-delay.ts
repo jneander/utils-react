@@ -1,8 +1,11 @@
 import {useEffect, useRef, useState} from 'react'
 
-export const DEFAULT_DURATION = 100
+export const USE_DELAY_DEFAULT_DURATION = 100
 
-export function useDelay(shouldDelay, delayDuration = DEFAULT_DURATION) {
+export function useDelay(
+  shouldDelay: boolean,
+  delayDuration = USE_DELAY_DEFAULT_DURATION,
+): boolean {
   const [isDelayed, setIsDelayed] = useState(true)
   const timeoutRef = useRef(null)
 

@@ -1,20 +1,33 @@
-import sinon from 'sinon'
+import {act, renderHook} from '@testing-library/react-hooks/dom'
+import sinon, {SinonSpy, SinonStub} from 'sinon'
 
-import {act, renderHook} from '@jneander/spec-utils-react'
+import {USE_DEBOUNCED_EFFECT_DEFAULT_DURATION, useDebouncedEffect} from './use-debounced-effect'
 
-import {DEFAULT_DURATION, useDebouncedEffect} from './use-debounced-effect'
+type UseDebouncedEffectParameters = Parameters<typeof useDebouncedEffect>
+
+interface UseDebouncedEffectOptions {
+  callback: SinonSpy
+  dependencies: UseDebouncedEffectParameters[1]
+  duration: UseDebouncedEffectParameters[2]
+}
 
 describe('Hooks > .useDebouncedEffect()', () => {
-  let component
-  let options
-  let timeoutFn
+  let component: ReturnType<typeof renderHook>
+  let options: UseDebouncedEffectOptions
+  let timeoutFn: Parameters<typeof setTimeout>[0]
+
+  let setTimeoutStub: SinonStub
+  let clearTimeoutSpy: SinonSpy
 
   beforeEach(() => {
-    sinon.stub(window, 'setTimeout').callsFake(fn => {
-      timeoutFn = fn
-      return 123
-    })
-    sinon.stub(window, 'clearTimeout')
+    setTimeoutStub = sinon
+      .stub(window, 'setTimeout')
+      .callsFake((fn: Parameters<typeof setTimeout>[0]) => {
+        timeoutFn = fn
+        return 123 as unknown as ReturnType<typeof setTimeout>
+      })
+
+    clearTimeoutSpy = sinon.spy(window, 'clearTimeout')
 
     options = {
       callback: sinon.spy(),
@@ -26,8 +39,8 @@ describe('Hooks > .useDebouncedEffect()', () => {
   })
 
   afterEach(() => {
-    window.setTimeout.restore()
-    window.clearTimeout.restore()
+    setTimeoutStub.restore()
+    clearTimeoutSpy.restore()
   })
 
   function render() {
@@ -53,15 +66,15 @@ describe('Hooks > .useDebouncedEffect()', () => {
 
     it('sets the timeout using the given duration', () => {
       render()
-      const [, duration] = window.setTimeout.lastCall.args
+      const [, duration] = setTimeoutStub.lastCall.args
       expect(duration).to.equal(100)
     })
 
     it('sets the timeout using a default duration when given no duration', () => {
       delete options.duration
       render()
-      const [, duration] = window.setTimeout.lastCall.args
-      expect(duration).to.equal(DEFAULT_DURATION)
+      const [, duration] = setTimeoutStub.lastCall.args
+      expect(duration).to.equal(USE_DEBOUNCED_EFFECT_DEFAULT_DURATION)
     })
   })
 
@@ -81,11 +94,11 @@ describe('Hooks > .useDebouncedEffect()', () => {
     })
 
     it('clears the current timeout', () => {
-      expect(window.clearTimeout.callCount).to.equal(1)
+      expect(clearTimeoutSpy.callCount).to.equal(1)
     })
 
     it('clears the current timeout using the id of the timeout', () => {
-      const [timeoutId] = window.clearTimeout.lastCall.args
+      const [timeoutId] = clearTimeoutSpy.lastCall.args
       expect(timeoutId).to.equal(123)
     })
 
@@ -94,7 +107,7 @@ describe('Hooks > .useDebouncedEffect()', () => {
     })
 
     it('sets the timeout using the given duration', () => {
-      const [, duration] = window.setTimeout.lastCall.args
+      const [, duration] = setTimeoutStub.lastCall.args
       expect(duration).to.equal(100)
     })
   })
@@ -106,11 +119,11 @@ describe('Hooks > .useDebouncedEffect()', () => {
     })
 
     it('clears the timeout', () => {
-      expect(window.clearTimeout.callCount).to.equal(1)
+      expect(clearTimeoutSpy.callCount).to.equal(1)
     })
 
     it('clears the timeout using the id of the timeout', () => {
-      const [timeoutId] = window.clearTimeout.lastCall.args
+      const [timeoutId] = clearTimeoutSpy.lastCall.args
       expect(timeoutId).to.equal(123)
     })
   })

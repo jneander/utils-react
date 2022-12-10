@@ -14,7 +14,7 @@ module.exports = {
     rules: [
       {
         exclude: /node_modules/,
-        test: /\.js$/,
+        test: /\.(js|ts|tsx)$/,
         use: [
           {
             loader: 'babel-loader',
@@ -24,6 +24,11 @@ module.exports = {
                   '@babel/preset-env',
 
                   {
+                    corejs: {
+                      proposals: false,
+                      version: 3,
+                    },
+
                     modules: false,
 
                     targets: {
@@ -37,6 +42,8 @@ module.exports = {
                         'last 2 ChromeAndroid versions',
                       ],
                     },
+
+                    useBuiltIns: 'usage',
                   },
                 ],
 
@@ -70,6 +77,7 @@ module.exports = {
   ],
 
   resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
     modules: [srcPath, 'node_modules'],
   },
 
