@@ -1,4 +1,4 @@
-import {act, renderHook} from '@testing-library/react-hooks/dom'
+import {act, renderHook} from '@testing-library/react'
 import sinon, {SinonSpy, SinonStub} from 'sinon'
 
 import {USE_DEBOUNCED_EFFECT_DEFAULT_DURATION, useDebouncedEffect} from './use-debounced-effect'
@@ -23,7 +23,7 @@ describe('Hooks > .useDebouncedEffect()', () => {
     setTimeoutStub = sinon
       .stub(window, 'setTimeout')
       .callsFake((fn: Parameters<typeof setTimeout>[0]) => {
-        timeoutFn = fn
+        timeoutFn = () => act(fn)
         return 123 as unknown as ReturnType<typeof setTimeout>
       })
 
@@ -81,7 +81,7 @@ describe('Hooks > .useDebouncedEffect()', () => {
   describe('when the delay duration has elapsed', () => {
     it('calls the callback function', () => {
       render()
-      act(() => timeoutFn())
+      timeoutFn()
       expect(options.callback.callCount).to.equal(1)
     })
   })

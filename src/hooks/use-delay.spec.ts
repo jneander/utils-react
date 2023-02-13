@@ -1,4 +1,4 @@
-import {act, renderHook} from '@testing-library/react-hooks/dom'
+import {act, renderHook} from '@testing-library/react'
 import sinon, {SinonSpy, SinonStub} from 'sinon'
 
 import {useDelay} from './use-delay'
@@ -9,7 +9,7 @@ interface UseDelayOptions {
 }
 
 describe('Hooks > .useDelay()', () => {
-  let component: ReturnType<typeof renderHook<unknown, ReturnType<typeof useDelay>>>
+  let component: ReturnType<typeof renderHook<ReturnType<typeof useDelay>, unknown>>
   let options: UseDelayOptions
   let result: ReturnType<typeof useDelay>
   let timeoutFn: Parameters<typeof setTimeout>[0]
@@ -21,7 +21,7 @@ describe('Hooks > .useDelay()', () => {
     setTimeoutStub = sinon
       .stub(window, 'setTimeout')
       .callsFake((fn: Parameters<typeof setTimeout>[0]) => {
-        timeoutFn = fn
+        timeoutFn = () => act(fn)
         return 123 as unknown as ReturnType<typeof setTimeout>
       })
 
@@ -44,7 +44,7 @@ describe('Hooks > .useDelay()', () => {
 
   function render() {
     if (component == null) {
-      component = renderHook<unknown, ReturnType<typeof useDelay>>(() =>
+      component = renderHook<ReturnType<typeof useDelay>, unknown>(() =>
         useDelay(options.shouldDelay, options.duration),
       )
     } else {
@@ -65,7 +65,7 @@ describe('Hooks > .useDelay()', () => {
 
   describe('when the delay duration has elapsed', () => {
     it('returns false', () => {
-      act(() => timeoutFn())
+      timeoutFn()
       render()
       expect(result).to.equal(false)
     })

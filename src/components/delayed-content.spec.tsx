@@ -1,4 +1,4 @@
-import {render} from '@testing-library/react'
+import {act, render} from '@testing-library/react'
 import sinon, {SinonSpy, SinonStub} from 'sinon'
 
 import {DelayedContent, DelayedContentProps} from './delayed-content'
@@ -15,7 +15,7 @@ describe('Components > DelayedContent', () => {
     setTimeoutStub = sinon
       .stub(window, 'setTimeout')
       .callsFake((fn: Parameters<typeof setTimeout>[0]) => {
-        timeoutFn = fn
+        timeoutFn = () => act(fn)
         return 123 as unknown as ReturnType<typeof setTimeout>
       })
 
