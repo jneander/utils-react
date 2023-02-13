@@ -101,7 +101,9 @@
     "extends": "@jneander/commitlint-config"
   },
   "lint-staged": {
-    "*": "prettier --check --ignore-unknown"
+    "*": [
+      "npm run lint:eslint --"
+    ]
   },
   "prettier": "@jneander/prettier-config"
 }
