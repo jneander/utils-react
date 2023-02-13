@@ -7,6 +7,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/jneander/utils-react/compare/v2.0.0...v2.1.0) (2023-02-13)
+
+### Features
+
+- support react 18
+  ([90a2caf](https://github.com/jneander/utils-react/commit/90a2caf659d5a5695df76220311218fbe29255c2))
+
 ## [2.0.0](https://github.com/jneander/utils-react/compare/v1.3.1...v2.0.0) (2022-12-10)
 
 ### ⚠ BREAKING CHANGES
